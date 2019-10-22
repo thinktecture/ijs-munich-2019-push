@@ -6,15 +6,14 @@
 </head>
 <body>
 <script>
-    async function showNotification() {
-        const result = await Notification.requestPermission();
-        if (result === 'granted') {
-            const noti = new Notification('Hello!', {body: 'It’s me.', icon: 'icon512.png'});
-            noti.onclick = () => alert('clicked');
-        }
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+        navigator.serviceWorker.ready.then(registration => {
+            if ('PushManager' in window) {
+                // registerForPush(registration.pushManager);
+            }
+        });
     }
-
-    showNotification();
 </script>
 </body>
 </html>
