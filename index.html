@@ -10,9 +10,20 @@
         navigator.serviceWorker.register('sw.js');
         navigator.serviceWorker.ready.then(registration => {
             if ('PushManager' in window) {
-                // registerForPush(registration.pushManager);
+                registerForPush(registration.pushManager);
             }
         });
+    }
+
+    function registerForPush(pushManager) {
+        const options = {
+            userVisibleOnly: true,
+            applicationServerKey: new Uint8Array([/* … */])
+        };
+
+        pushManager.subscribe(options)
+            .then(subscription => console.log(subscription.toJSON()))
+            .catch(error => console.log(error));
     }
 </script>
 </body>
